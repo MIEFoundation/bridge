@@ -77,7 +77,7 @@ module.exports = class Discord extends BasePlatform {
 		let text = this.tag(msg.author.tag.replace('#', ' #'))
 		text += (msg.content.startsWith(">") ? "\n" : "") + msg.content
 		if (msg.attachments.size) {
-			text += this.greentext(Array.from(msg.attachments, v => v.url).join('\n'))
+			text += "\n" + this.greentext(Array.from(msg.attachments.values(), v => v.url).join('\n'))
 		}
 		return text
 	}

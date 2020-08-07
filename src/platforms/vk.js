@@ -105,7 +105,7 @@ module.exports = class VK extends BasePlatform {
 			case "graffiti": return `[Граффити] ${v.url}`
 			case "market": return `[Товар] https://vk.com/market?w=product${v.ownerId}_${v.id}`
 			case "poll": return `[Опрос] https://vk.com/${v}`
-			case "sticker": return `[Стикер] https://vk.com/sticker/1-${v.id}-256`
+			case "sticker": return `[Стикер] https://vk.com/sticker/1-${v.id}-128`
 			case "story": return `[Сторис] ${v.link}`
 			case "gift": return `[Подарок ВК]`
 			case "market_album": return `[Товары ВК]`
