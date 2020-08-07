@@ -1,0 +1,24 @@
+{
+  "name": "mie-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bridge application for MIEFoundation",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "bridge",
+    "messaging",
+    "discord",
+    "vk",
+    "miefoundation"
+  ],
+  "author": "Saiv46",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "node-persist": "^3.1.0",
+    "vk-io": "^4.0.0-rc.30"
+  }
+}
