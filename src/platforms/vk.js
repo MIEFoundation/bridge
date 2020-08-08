@@ -1,6 +1,8 @@
 const { VK: Client } = require("vk-io")
 const { BasePlatform } = require("../utils.js")
 
+const URL = /https?:\/\/.+\.(png|jpg)/g
+
 module.exports = class VK extends BasePlatform {
 	get tagName () { return 'vk' }
 	get idName () { return 'VK' }
@@ -57,13 +59,20 @@ module.exports = class VK extends BasePlatform {
 		})
 		return this
 	}
+
+	async upload (peer_id, message) {
+		if (!URL.test(message)) return []
+		const values = message.match(URL).map(value => ({ value }))
+		return this.client.upload.messagePhoto({ source: { values }, peer_id })
+	}
 	
 	async send (peer_id, message) {
 		return this.createId(peer_id, await this.api.messages.send({
 			peer_id,
 			message,
-			disable_mentions: 1,
+			disable_mentions: +(!message.includes("@everyone") && !message.includes("@here")),
 			random_id: Math.random().toString().substring(2),
+			// attachments: await this.upload(peer_id, message)
 			...(this.groupId ? { group_id: this.groupId } : {})
 		}))
 	}
@@ -94,7 +103,7 @@ module.exports = class VK extends BasePlatform {
 	
 	attachmentToUrl (v) {
 		switch (v.type) {
-			case "photo": return v.largeSizeUrl || v.mediumSizeUrl || v.smallSizeUrl
+			case "photo": return v.sizes.sort((a, b) => b.width - a.width)[0].url
 			case "audio_message": return `[Аудиосообщение] ${v.url}`
 			case "audio":
 			case "doc":
@@ -117,7 +126,7 @@ module.exports = class VK extends BasePlatform {
 
 	async toMessage (ctx) {
 		if (ctx.isRemoved) return '[ДАННЫЕ_УДАЛЕНЫ]'
-		if (-ctx.senderId === this.groupId) return this.greentext(ctx.text)
+		if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) return this.greentext(ctx.text)
 		if (ctx.hasMessagePayload) { await ctx.loadMessagePayload() }
 		const { first_name, last_name, screen_name } = await this.getUser(ctx.senderId)
 		let text = this.tag(screen_name, `${first_name} ${last_name}`)
