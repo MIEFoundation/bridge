@@ -26,18 +26,16 @@ module.exports = class VK extends BasePlatform {
 		this.userCache = new Map()
 		this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
 			await ctx.loadMessagePayload()
+			if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) return
 			let id = ctx.id
-			if (this.groupId) {
-				if (-ctx.senderId === this.groupId) return
-				if (!id) {
-					const { items: [ msg ] } = await this.api.messages.getByConversationMessageId({
-						peer_id: ctx.peerId,
-						group_id: this.groupId,
-						conversation_message_ids: ctx.conversationMessageId
-					})
-					id = msg.id
-				}
-			} else if (ctx.senderId === this.userId) return
+			if (!id) {
+				const { items: [ msg ] } = await this.api.messages.getByConversationMessageId({
+					peer_id: ctx.peerId,
+					...(this.groupId ? { group_id: this.groupId } : {}),
+					conversation_message_ids: ctx.conversationMessageId
+				})
+				id = msg.id
+			}
 			ctx.bridgeId = this.createId(ctx.peerId, id)
 			ctx.bridgeMessage = await this.toMessage(ctx)
 			next()
