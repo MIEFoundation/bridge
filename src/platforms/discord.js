@@ -1,6 +1,8 @@
-const { Client, MessageEmbed } = require("discord.js")
+const { Client, MessageEmbed, MessageMentions } = require("discord.js")
 const { BasePlatform } = require("../utils")
 const { once } = require('events')
+
+const EMOJI_PATTERN = /<(a?:\w+:)(\d+)>/g
 
 module.exports = class Discord extends BasePlatform {
 	get tagName () { return 'discord' }
@@ -10,8 +12,6 @@ module.exports = class Discord extends BasePlatform {
 		super()
 		this.client = new Client({
 			fetchAllMembers: true,
-			disableMentions: "all",
-			allowedMentions: { parse: ["everyone"] },
 			presence: {
 				status: "online",
 				activity: {
@@ -71,6 +71,22 @@ module.exports = class Discord extends BasePlatform {
 		return true
 	}
 	
+	mentionsToText (mentions, text) {
+		if (mentions.crosspostedChannels.size) {
+			text = text.replace(MessageMentions.CHANNELS_PATTERN, (_, id) => `#${mentions.crosspostedChannels.get(id).name}`)
+		}
+		if (mentions.roles.size) {
+			text = text.replace(MessageMentions.ROLES_PATTERN, (_, id) => `@${mentions.roles.get(id).name}`)
+		}
+		if (mentions.members.size) {
+			text = text.replace(MessageMentions.USERS_PATTERN, (_, id) => `@${mentions.members.get(id).name}`)
+		}
+		if (EMOJI_PATTERN.test(text)) {
+			text = text.replace(EMOJI_PATTERN, "$1")
+		}
+		return text
+	}
+	
 	toMessage (msg) {
 		if (msg.deleted) return
 		if (msg.author.id === this.selfId) return this.greentext(msg)
@@ -79,6 +95,6 @@ module.exports = class Discord extends BasePlatform {
 		if (msg.attachments.size) {
 			text += "\n" + this.greentext(Array.from(msg.attachments.values(), v => v.url).join('\n'))
 		}
-		return text
+		return mentionsToText(msg.mentions, text)
 	}
 }

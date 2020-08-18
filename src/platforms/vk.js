@@ -1,7 +1,9 @@
 const { VK: Client } = require("vk-io")
 const { BasePlatform } = require("../utils.js")
 
-const URL = /https?:\/\/.+\.(png|jpg)/g
+const URL_PATTERN = /https?:\/\/.+\.(png|jpg)/g
+const EVERYONE_PATTERN = /^[^>]*@(all|everyone)/g
+const HERE_PATTERN = /^[^>]*@(online|here)/g
 
 module.exports = class VK extends BasePlatform {
 	get tagName () { return 'vk' }
@@ -61,7 +63,7 @@ module.exports = class VK extends BasePlatform {
 
 	async upload (peer_id, message) {
 		if (!URL.test(message)) return []
-		const values = message.match(URL).map(value => ({ value }))
+		const values = message.match(URL_PATTERN).map(value => ({ value }))
 		return this.client.upload.messagePhoto({ source: { values }, peer_id })
 	}
 	
@@ -109,10 +111,10 @@ module.exports = class VK extends BasePlatform {
 			case "photo": return v.sizes.sort((a, b) => b.width - a.width)[0].url
 			case "audio_message": return `[Аудиосообщение] ${v.url}`
 			case "audio":
-			case "doc":
-			case "video":
 			case "link":
-				return `[${v.isHq ? '(HD) ' : ''}${v.artist ? (v.artist + ' - ') : ''}${v.title}] ${v.url || ('https://vk.com/' + v)}`
+				return `[${v.isHq ? '(HD) ' : ''}${v.artist} - ${v.title}] ${v.url}`
+			case "video":
+				return `[${v.title}] https://vk.com/video${v.ownerId}_${v.id}`
 			case "wall": return `[Запись на стене] https://vk.com/${v}`
 			case "graffiti": return `[Граффити] ${v.url}`
 			case "market": return `[Товар] https://vk.com/market?w=product${v.ownerId}_${v.id}`
@@ -144,6 +146,12 @@ module.exports = class VK extends BasePlatform {
 			for (const msg of ctx.forwards) {
 				text += "\n" + this.greentext(await this.toMessage(msg))
 			}
+		}
+		if (EVERYONE.test(text)) {
+			text = text.replace(EVERYONE_PATTERN, "@everyone")
+		}
+		if (HERE.test(text)) {
+			text = text.replace(HERE_PATTERN, "@here")
 		}
 		return text
 	}
