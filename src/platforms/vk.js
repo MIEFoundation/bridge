@@ -20,13 +20,12 @@ module.exports = class VK extends BasePlatform {
 		this.api = this.client.api
 		if (groupId) {
 			this.groupId = groupId
-		} else {
-			this.userId = 0
 		}
+		this.userId = 0
 		this.userCache = new Map()
 		this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
 			await ctx.loadMessagePayload()
-			if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) return
+			if (ctx.admin_author_id === this.userId || ctx.senderId === this.userId) return
 			let id = ctx.id
 			if (!id) {
 				const { items: [ msg ] } = await this.api.messages.getByConversationMessageId({
@@ -43,10 +42,8 @@ module.exports = class VK extends BasePlatform {
 	}
 	
 	async start () {
-		if (!this.groupId) {
-			const [{ id }] = await this.api.users.get();
-			this.userId = id;
-		}
+		const [{ id }] = await this.api.users.get();
+		this.userId = id;
 		await this.client.updates.startPolling()
 	}
 	
