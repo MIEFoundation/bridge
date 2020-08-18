@@ -133,7 +133,7 @@ module.exports = class VK extends BasePlatform {
 		if (ctx.hasMessagePayload) { await ctx.loadMessagePayload() }
 		const { first_name, last_name, screen_name, name } = await this.getUser(ctx.senderId)
 		let text = this.tag(screen_name, name || `${first_name} ${last_name}`)
-		if (ctx.hasText) { text += ctx.text }
+		if (ctx.hasText) { text += (msg.content.startsWith(">") ? "\n" : "") + ctx.text }
 		if (ctx.attachments.length) {
 			text += "\n" + this.greentext(Array.from(ctx.attachments, this.attachmentToUrl).join('\n'))
 		}
