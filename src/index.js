@@ -11,55 +11,93 @@ module.exports = class App {
 	constructor (settings) {
 		this.toName = mapChatsToDictionary(settings)
 		this.storage = new Storage(settings.storage)
+		this.failsafe = settings.failsafe
+		this.logging = settings.logging
 		
 		this.instances = {}
-		for (const [ platformName, { name, config } ] of Object.entries(settings.platforms)) {
-			const inst = new platforms[name](config)
-			const toName = this.toName[platformName]
-			if (settings.logging) {
-				inst.onSend((id, msg) => console.log(MSG_NEW + MSG_HEAD, id, msg))
-					.onEdit((id, msg) => console.log(MSG_EDT + MSG_HEAD, id, msg))
-					.onRemove((id, msg) => console.log(MSG_REM + MSG_HEAD, id, msg))
+		for (const [ name, config ] of Object.entries(settings.platforms)) {
+			try {
+				this.initPlatform(name, config)
+			} catch (e) {
+				console.warn(`* Error initializating platform ${name}:\n`, e)
+				if (!this.failsafe) {
+					process.exit(1)
+				}
+				continue
 			}
-			inst.onSend(async (id, msg) => {
-				const ids = []
-				const chat = toName[id[0]]
-				for (const chatId in chat) {
-					ids.push(await this.instances[chatId].send(chat[chatId], msg))
-				}
-				await this.addMessages(id, ids)
-			})
-			.onEdit(async (id, msg) => {
-				const ids = await this.fetchMessages(id)
-				const chat = Object.keys(toName[id[0]])
-				for (let i = 0, l = chat.length; i < l; i++) {
-					await this.instances[chat[i]].edit(ids[i], msg)
-				}
-			})
-			.onRemove(async (id, msg) => {
-				const ids = await this.fetchMessages(id)
-				const chat = Object.keys(toName[id[0]])
-				for (let i = 0, l = chat.length; i < l; i++) {
-					await this.instances[chat[i]].remove(ids[i])
-				}
-				await this.removeMessages(id)
-			})
-			
-			this.instances[platformName] = inst
 		}
 	}
+
+	initPlatform (platformName, { name, config }) {
+		if (!platforms[name]) {
+			throw new Error(`${name} platform support not available`)
+		}
+		const inst = new platforms[name](config)
+		const toName = this.toName[platformName]
+		if (this.logging) {
+			inst.onSend((id, msg) => console.log(MSG_NEW + MSG_HEAD, id, msg))
+				.onEdit((id, msg) => console.log(MSG_EDT + MSG_HEAD, id, msg))
+				.onRemove((id, msg) => console.log(MSG_REM + MSG_HEAD, id, msg))
+		}
+		inst.onSend(async (id, msg) => {
+			const ids = []
+			const chat = toName[id[0]]
+			for (const chatId in chat) {
+				if (!this.instances[chatId]) continue
+				try {
+					ids.push(await this.instances[chatId].send(chat[chatId], msg))
+				} catch (e) {
+					console.warn(`* Caught error on platform ${chatId} on message sending:\n`, e)
+					if (!this.failsafe) process.exit(1)
+				}
+			}
+			await this.addMessages(id, ids)
+		})
+		.onEdit(async (id, msg) => {
+			const ids = await this.fetchMessages(id)
+			const chat = Object.keys(toName[id[0]])
+			for (let i = 0, l = chat.length; i < l; i++) {
+				if (!this.instances[chat[i]]) continue
+				try {
+					await this.instances[chat[i]].edit(ids[i], msg)
+				} catch (e) {
+					console.warn(`* Caught error on platform ${chat[i]} on message edit:\n`, e)
+					if (!this.failsafe) process.exit(1)
+				}
+			}
+		})
+		.onRemove(async (id, msg) => {
+			const ids = await this.fetchMessages(id)
+			const chat = Object.keys(toName[id[0]])
+			for (let i = 0, l = chat.length; i < l; i++) {
+				if (!this.instances[chat[i]]) continue
+				try {
+					await this.instances[chat[i]].remove(ids[i])
+				} catch (e) {
+					console.warn(`* Caught error on platform ${chat[i]} on message remove:\n`, e)
+					if (!this.failsafe) process.exit(1)
+				}
+			}
+			await this.removeMessages(id)
+		})
+		this.instances[platformName] = inst
+	}
 	
-	async fetchMessages (id) { return this.storage.get(id.toString()) }
-	async addMessages (id, msgids) { return this.storage.set(id.toString(), msgids) }
-	async removeMessages (id) { return this.storage.delete(id.toString()) }
+	async fetchMessages (id) { return this.storage.get(id) }
+	async addMessages (id, msgids) { return this.storage.set(id, msgids) }
+	async removeMessages (id) { return this.storage.delete(id) }
 	
 	async start () {
-		console.log('Starting...')
 		await this.storage.start()
 		console.log('* Message storage ready')
 		await Promise.all(Object.entries(this.instances).map(async ([name, inst]) => {
-			await inst.start()
-			console.log(`* ${name} [${inst.constructor.name}] ready`)
+			try {
+				await inst.start()
+				console.log(`* ${name} [${inst.constructor.name}] ready`)
+			} catch (e) {
+				console.warn(`* ${name} [${inst.constructor.name}] failed`)
+				if (!this.failsafe) process.exit(1)
+			}
 		}))
 	}
 }
