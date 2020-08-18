@@ -16,7 +16,7 @@ module.exports = class Storage {
 		return this.cache.get(id.toString())
 	}
 	async set (id, value) {
-		this.cache(id.toString(), value)
+		this.cache.set(id.toString(), value)
 		return this
 	}
 	async delete (id) {
