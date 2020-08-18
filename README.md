@@ -1,6 +1,6 @@
 # MIEFoundation Bridge
 [![Discord](https://img.shields.io/discord/494019390841421825?style=flat-square)](https://discord.gg/Hv9tJMf)
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen?style=flat-square)](https://standardjs.com/)
 [![License](https://img.shields.io/github/license/miefoundation/bridge?style=flat-square)](https://github.com/miefoundation/bridge/blob/master/LICENSE)
 
 MIEFoundation Bridge - an [Node.js](https://nodejs.org) application that allows you to bridge chats from various platforms 💬
