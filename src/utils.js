@@ -4,7 +4,8 @@ class MessageID extends Array {
 		this.prefix = prefix
 	}
 	
-	toString () { return this.prefix + this.valueOf().join("-") }
+	static fromString (str) { return new MessageID(...str.split("-")) }
+	toString () { return this.prefix + "-" + this.valueOf().join("-") }
 }
 
 class BasePlatform {
