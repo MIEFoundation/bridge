@@ -1,4 +1,4 @@
-const { promises: { mkdir, readFile, writeFile }, existsSync } = require('fs')
+const { promises: { mkdir, readFile, writeFile, unlink }, existsSync } = require('fs')
 const msgpack = require("msgpack-lite")
 const { MessageID } = require('./utils')
 
