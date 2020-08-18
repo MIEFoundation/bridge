@@ -1,15 +1,24 @@
-module.exports = {
-	// Включить
-	logging: true,
+// You can use any JavaScript here
+// and then export settings with module.exports
 
-	// Платформы
+module.exports = {
+	// Log every action with messages to console
+	logging: false,
+
+	// Do not exit on error
+	failsafe: true,
+
+	// Platform settings
 	platforms: {
+		// User-defined platform ID
 		platform1: {
+			// Name of platform to use
 			name: 'VK',
+			// Config of platform (varies)
 			config: {
-				groupId: 123456789,
-				userAgent: "MIEFoudation/Beta (+https://vk.com/@miefoundation-tech)",
-				token: "sampletokenforvksampletokenforvksampletokenforvksampletokenforvk"
+				groupId: 123456789, // Optional
+				// userAgent: "Custom user agent"
+				token: "SampleUserTokenToVKSampleUserTokenToVKSampleUserTokenToVKSampleUserTokenToVK"
 			}
 		},
 		platform2: {
@@ -17,14 +26,16 @@ module.exports = {
 			config: {
 				clientId: "123456789012345678",
 				guildId: "098765432109876543",
-				token: "SampleTokenForDiscord.SampleTokenForDiscord.SampleTokenForDiscord"
+				token: "SampleTokenForDiscordBot.SampleTokenForDiscordBot.SampleTokenForDiscordBot"
 			}
 		}
 	},
 
-	// Настройки чатов
+	// Chat settings
 	chats: {
+		// User-defined chat ID
 		chat1: {
+			// Platform ID (defined above) mapped to chat
 			platform1: 2000000000 + 1,
 			platform2: "123456789012345678"
 		},
@@ -34,9 +45,20 @@ module.exports = {
 		}
 	},
 
-	// Настройки хранилища
+	// Storage settings
 	storage: {
-		// Путь к папке
-		path: './.storage/'
+		// Do not write anything to disk
+		// Turn on if you know what are you doing
+		// Default = false
+		cacheOnly: false,
+		// Otherwise, write message IDs to file
+		// Message contents are NOT stored
+		// Default = ".storage"
+		path: '.storage',
+		// Cleanup old messages from storage and write
+		// everything else to disk every N seconds
+		// (Messages are considered old after 24 hours)
+		// Default = 60 * 10
+		saveInterval: 60 * 60
 	}
 }
