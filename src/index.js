@@ -42,6 +42,7 @@ module.exports = class App {
 		inst.onSend(async (id, msg) => {
 			const ids = []
 			const chat = toName[id[0]]
+			if (!chat) return
 			for (const chatId in chat) {
 				if (!this.instances[chatId]) continue
 				try {
@@ -56,6 +57,7 @@ module.exports = class App {
 		.onEdit(async (id, msg) => {
 			const ids = await this.fetchMessages(id)
 			const chat = toName[id[0]]
+			if (!chat) return
 			let i = 0;
 			for (const chatId in chat) {
 				if (!this.instances[chat[chatId]]) continue
@@ -71,6 +73,7 @@ module.exports = class App {
 		.onRemove(async (id, msg) => {
 			const ids = await this.fetchMessages(id)
 			const chat = toName[id[0]]
+			if (!chat) return
 			let i = 0;
 			for (const chatId in chat) {
 				if (!this.instances[chat[chatId]]) continue
