@@ -7,7 +7,7 @@ module.exports = class VK extends BasePlatform {
 	get tagName () { return 'vk' }
 	get idName () { return 'VK' }
 	
-	constructor ({ token, userId, groupId, userAgent }) {
+	constructor ({ token, userId, groupId, userAgent = "MIEFoudation/Bridge (+https://github.com/MIEFoundation/Bridge)" }) {
 		super()
 		this.client = new Client({
 			token,
@@ -21,7 +21,7 @@ module.exports = class VK extends BasePlatform {
 		if (groupId) {
 			this.groupId = groupId
 		} else {
-			this.userId = userId
+			this.userId = 0
 		}
 		this.userCache = new Map()
 		this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
@@ -43,6 +43,10 @@ module.exports = class VK extends BasePlatform {
 	}
 	
 	async start () {
+		if (!this.groupId) {
+			const [{ id }] = await this.api.users.get();
+			this.userId = id;
+		}
 		await this.client.updates.startPolling()
 	}
 	
@@ -94,7 +98,11 @@ module.exports = class VK extends BasePlatform {
 	
 	async getUser (id) {
 		if (this.userCache.has(id)) return this.userCache.get(id)
-		const [ user ] = await this.api.users.get({ user_ids: id, fields: "screen_name" })
+		const [ user ] = await (
+			id > 0
+			? this.api.users.get({ user_ids: id, fields: "screen_name" })
+			: this.api.groups.getById({ group_ids: id, fields: "screen_name" })
+		)
 		this.userCache.set(id, user)
 		return user
 	}
@@ -126,8 +134,8 @@ module.exports = class VK extends BasePlatform {
 		if (ctx.isRemoved) return '[ДАННЫЕ_УДАЛЕНЫ]'
 		if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) return this.greentext(ctx.text)
 		if (ctx.hasMessagePayload) { await ctx.loadMessagePayload() }
-		const { first_name, last_name, screen_name } = await this.getUser(ctx.senderId)
-		let text = this.tag(screen_name, `${first_name} ${last_name}`)
+		const { first_name, last_name, screen_name, name } = await this.getUser(ctx.senderId)
+		let text = this.tag(screen_name, name || `${first_name} ${last_name}`)
 		if (ctx.hasText) { text += ctx.text }
 		if (ctx.attachments.length) {
 			text += "\n" + this.greentext(Array.from(ctx.attachments, this.attachmentToUrl).join('\n'))
