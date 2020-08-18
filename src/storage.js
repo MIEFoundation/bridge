@@ -39,7 +39,7 @@ module.exports = class Storage {
 	
 	async readFile () {
 		const { msg, ts } = msgpack.decode(
-			await readFile(this.existsSync(this.path) ? this.path : this.pathBackup)
+			await readFile(existsSync(this.path) ? this.path : this.pathBackup)
 		)
 		for (const key in msg) {
 			this.cache.set(key, msg[key].map(MessageID.fromString))
