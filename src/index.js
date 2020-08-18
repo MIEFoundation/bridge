@@ -60,11 +60,11 @@ module.exports = class App {
 			if (!chat) return
 			let i = 0;
 			for (const chatId in chat) {
-				if (!this.instances[chat[chatId]]) continue
+				if (!this.instances[chatId]) continue
 				try {
-					await this.instances[chat[chatId]].edit(ids[i], msg)
+					await this.instances[chatId].edit(ids[i], msg)
 				} catch (e) {
-					console.warn(`* Caught error on platform ${chat[i]} on message edit:\n`, e)
+					console.warn(`* Caught error on platform ${chatId} on message edit:\n`, e)
 					if (!this.failsafe) process.exit(1)
 				}
 				i++
@@ -76,11 +76,11 @@ module.exports = class App {
 			if (!chat) return
 			let i = 0;
 			for (const chatId in chat) {
-				if (!this.instances[chat[chatId]]) continue
+				if (!this.instances[chatId]) continue
 				try {
-					await this.instances[chat[chatId]].remove(ids[i])
+					await this.instances[chatId].remove(ids[i])
 				} catch (e) {
-					console.warn(`* Caught error on platform ${chat[i]} on message remove:\n`, e)
+					console.warn(`* Caught error on platform ${chatId} on message remove:\n`, e)
 					if (!this.failsafe) process.exit(1)
 				}
 			}
