@@ -25,7 +25,7 @@ module.exports = class VK extends BasePlatform {
 		this.userCache = new Map()
 		this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
 			await ctx.loadMessagePayload()
-			if (ctx.admin_author_id === this.userId || ctx.senderId === this.userId) return
+			if (ctx.senderId === this.userId) return
 			let id = ctx.id
 			if (!id) {
 				const { items: [ msg ] } = await this.api.messages.getByConversationMessageId({
@@ -34,6 +34,7 @@ module.exports = class VK extends BasePlatform {
 					conversation_message_ids: ctx.conversationMessageId
 				})
 				id = msg.id
+				if (msg.admin_author_id && msg.admin_author_id === this.userId) return
 			}
 			ctx.bridgeId = this.createId(ctx.peerId, id)
 			ctx.bridgeMessage = await this.toMessage(ctx)
