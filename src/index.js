@@ -55,24 +55,27 @@ module.exports = class App {
 		})
 		.onEdit(async (id, msg) => {
 			const ids = await this.fetchMessages(id)
-			const chat = Object.keys(toName[id[0]])
-			for (let i = 0, l = chat.length; i < l; i++) {
-				if (!this.instances[chat[i]]) continue
+			const chat = toName[id[0]]
+			let i = 0;
+			for (const chatId in chat) {
+				if (!this.instances[chat[chatId]]) continue
 				try {
-					await this.instances[chat[i]].edit(ids[i], msg)
+					await this.instances[chat[chatId]].edit(ids[i], msg)
 				} catch (e) {
 					console.warn(`* Caught error on platform ${chat[i]} on message edit:\n`, e)
 					if (!this.failsafe) process.exit(1)
 				}
+				i++
 			}
 		})
 		.onRemove(async (id, msg) => {
 			const ids = await this.fetchMessages(id)
-			const chat = Object.keys(toName[id[0]])
-			for (let i = 0, l = chat.length; i < l; i++) {
-				if (!this.instances[chat[i]]) continue
+			const chat = toName[id[0]]
+			let i = 0;
+			for (const chatId in chat) {
+				if (!this.instances[chat[chatId]]) continue
 				try {
-					await this.instances[chat[i]].remove(ids[i])
+					await this.instances[chat[chatId]].remove(ids[i])
 				} catch (e) {
 					console.warn(`* Caught error on platform ${chat[i]} on message remove:\n`, e)
 					if (!this.failsafe) process.exit(1)
