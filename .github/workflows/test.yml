@@ -1,0 +1,23 @@
+name: Application testing
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: test-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            test-${{ env.cache-name }}-
+            test-
+      - run: npm ci
+      - run: npm test
