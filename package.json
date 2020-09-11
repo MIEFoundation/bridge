@@ -5,7 +5,9 @@
   "description": "Bridge application for MIEFoundation",
   "main": "./src/index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "standard",
+    "test": "npm run lint"
   },
   "keywords": [
     "bridge",
@@ -20,5 +22,8 @@
     "discord.js": "^12.2.0",
     "msgpack-lite": "^0.1.26",
     "vk-io": "^4.0.0-rc.30"
+  },
+  "devDependencies": {
+    "standard": "^14.3.4"
   }
 }
