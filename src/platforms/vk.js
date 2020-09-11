@@ -20,14 +20,12 @@ module.exports = class VK extends BasePlatform {
 			...(groupId ? { pollingGroupId: groupId } : {})
 		})
 		this.api = this.client.api
-		if (groupId) {
-			this.groupId = groupId
-		}
+		this.groupId = groupId | 0
 		this.userId = 0
 		this.userCache = new Map()
 		this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
 			await ctx.loadMessagePayload()
-			if (ctx.senderId === this.userId || ctx.payload.admin_author_id === this.userId) return
+			if ((this.groupId ? ctx.payload.admin_author_id : ctx.senderId) === this.userId) return
 			let id = ctx.id
 			if (!id) {
 				const { items: [ msg ] } = await this.api.messages.getByConversationMessageId({
@@ -112,15 +110,15 @@ module.exports = class VK extends BasePlatform {
 			case "audio_message": return `[Аудиосообщение] ${v.url}`
 			case "audio":
 			case "link":
-				return `[${v.isHq ? '(HD) ' : ''}${v.artist} - ${v.title}] ${v.url}`
+				return `${v.isHq ? '[HD] ' : ''}[${v.artist} - ${v.title}] ${v.url}`
 			case "video":
-				return `[${v.title}] https://vk.com/video${v.ownerId}_${v.id}`
+				return `${v.isBroadcast ? '[LIVE] ' : ''}[${v.title}] https://vk.com/video${v.ownerId}_${v.id}`
 			case "wall": return `[Запись на стене] https://vk.com/${v}`
 			case "graffiti": return `[Граффити] ${v.url}`
 			case "market": return `[Товар] https://vk.com/market?w=product${v.ownerId}_${v.id}`
 			case "poll": return `[Опрос] https://vk.com/${v}`
 			case "sticker": return `[Стикер] https://vk.com/sticker/1-${v.id}-128`
-			case "story": return `[Сторис] ${v.link}`
+			case "story": return `[Сторис] https://vk.com/${v}`
 			case "gift": return `[Подарок ВК]`
 			case "market_album": return `[Товары ВК]`
 			case "wall_reply": return `[Комментарий на стене]`
@@ -130,9 +128,11 @@ module.exports = class VK extends BasePlatform {
 	}
 
 	async toMessage (ctx) {
-		if (ctx.isRemoved) return '[ДАННЫЕ_УДАЛЕНЫ]'
-		if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) return this.greentext(ctx.text)
-		if (ctx.hasMessagePayload) { await ctx.loadMessagePayload() }
+		if (ctx.isRemoved) return
+		await ctx.loadMessagePayload(true)
+		if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) {
+			return this.greentext(ctx.text)
+		}
 		const { first_name, last_name, screen_name, name } = await this.getUser(ctx.senderId)
 		let text = this.tag(screen_name, name || `${first_name} ${last_name}`)
 		if (ctx.hasText) { text += (msg.content.startsWith(">") ? "\n" : "") + ctx.text }
