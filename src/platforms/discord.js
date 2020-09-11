@@ -3,6 +3,7 @@ const { BasePlatform } = require("../utils")
 const { once } = require('events')
 
 const EMOJI_PATTERN = /<(a?:\w+:)(\d+)>/g
+const TO_ANY_PATTERN = /(@\w+|:\w+:)/g
 
 module.exports = class Discord extends BasePlatform {
 	get tagName () { return 'discord' }
@@ -50,6 +51,7 @@ module.exports = class Discord extends BasePlatform {
 	async send (chatId, message) {
 		const channel = await this.client.channels.fetch(chatId)
 		channel.startTyping()
+		message = message.replace(TO_ANY_PATTERN, '<$&>')
 		const msg = await channel.send(message)
 		channel.stopTyping()
 		return this.createId(chatId, msg.id)
