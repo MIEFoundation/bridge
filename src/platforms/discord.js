@@ -3,7 +3,7 @@ const { BasePlatform } = require('../utils')
 const { once } = require('events')
 
 const EMOJI_PATTERN = /<(a?:\w+:)(\d+)>/g
-const TO_ANY_PATTERN = /(@\w+|:\w+:)/g
+const TO_ANY_PATTERN = /(:\w+:)/g
 
 module.exports = class Discord extends BasePlatform {
   get tagName () { return 'discord' }
