@@ -40,7 +40,7 @@ module.exports = class Discord extends BasePlatform {
       edit: 'messageUpdate',
       remove: 'messageDelete'
     })[name], async (msg, msgNew) => {
-      if (!msg.guild || msg.guild.id !== this.guildId || msg.author.id === this.selfID) return
+      if (!msg.guild || msg.author.id === this.selfID) return
       const bridgeId = this.createId(msg.channel.id, msg.id)
       const bridgeMessage = this.toMessage(msgNew || msg)
       func(bridgeId, bridgeMessage)
