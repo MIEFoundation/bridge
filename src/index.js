@@ -106,4 +106,17 @@ module.exports = class App {
       }
     }))
   }
+
+  async stop () {
+    await Promise.all(Object.entries(this.instances).map(async ([name, inst]) => {
+      try {
+        await inst.stop()
+        console.log(`* ${name} [${inst.constructor.name}] stopped gracefully`)
+      } catch (e) {
+        console.warn(`* ${name} [${inst.constructor.name}] not stopped properly`)
+      }
+    }))
+    await this.storage.stop()
+    console.log('* Message storage stopped')
+  }
 }

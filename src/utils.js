@@ -27,6 +27,14 @@ class BasePlatform {
   greentext (text) {
     return text.split('\n').map(v => '> ' + v).join('\n')
   }
+
+  async start () {
+    // To implement
+  }
+
+  async stop () {
+    // To implement
+  }
 }
 
 function mapChatsToDictionary ({ platforms, chats }) {

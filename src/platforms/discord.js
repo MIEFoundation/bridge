@@ -34,6 +34,11 @@ module.exports = class Discord extends BasePlatform {
     await once(this.client, 'ready')
   }
 
+  async stop () {
+    this.login = null
+    this.client = this.client.destroy()
+  }
+
   on (name, func) {
     this.client.on(({
       send: 'message',

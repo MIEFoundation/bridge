@@ -47,6 +47,11 @@ module.exports = class VK extends BasePlatform {
     await this.client.updates.startPolling()
   }
 
+  async stop () {
+    this.client = await this.client.updates.stop()
+    this.api = null
+  }
+
   on (name, func) {
     this.client.updates.on(({
       send: 'new_message',
