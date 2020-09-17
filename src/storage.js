@@ -1,4 +1,4 @@
-const { promises: { readFile, writeFile, unlink, rename }, existsSync } = require('fs')
+const { promises: { readFile, writeFile, unlink }, existsSync } = require('fs')
 const msgpack = require('msgpack-lite')
 const { MessageID } = require('./utils')
 
@@ -56,15 +56,17 @@ module.exports = class Storage {
       msg[key] = msgs.map(v => v.toString())
       ts[key] = this.timestamps.get(key)
     }
-    await writeFile(this.pathBackup, msgpack.encode({ msg, ts }))
-    await unlink(this.path)
-    await rename(this.pathBackup, this.path)
+    await writeFile(this.path, msgpack.encode({ msg, ts }))
   }
 
   async start () {
     if (this.cacheOnly) return
-    if (existsSync(this.path) || existsSync(this.pathBackup)) { await this.readFile() }
-    setTimeout(async () => {
+    if (existsSync(this.path)) { await this.readFile() }
+
+    // Deprecation
+    if (existsSync(this.pathBackup)) { await unlink(this.pathBackup) }
+
+    setInterval(async () => {
       console.log(`* Cleaned up ${await this.cleanup()} messages`)
       if (!this.cacheOnly) {
         await this.writeFile()
