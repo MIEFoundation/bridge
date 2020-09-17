@@ -129,7 +129,9 @@ module.exports = class VK extends BasePlatform {
 
   async toMessage (ctx) {
     if (ctx.isRemoved) return
-    await ctx.loadMessagePayload(true)
+    if (ctx.loadMessagePayload) {
+      await ctx.loadMessagePayload(true)
+    }
     if (-ctx.senderId === this.groupId || ctx.senderId === this.userId) {
       return this.greentext(ctx.text)
     }
@@ -137,14 +139,17 @@ module.exports = class VK extends BasePlatform {
       first_name: fName,
       last_name: lName,
       screen_name: nickname,
-      name
+      name = ''
     } = await this.getUser(ctx.senderId)
     let text = this.tag(nickname, name || `${fName} ${lName}`)
     if (ctx.hasText) {
-      text += (ctx.text.startsWith('>') ? '\n' : '') + ctx.text
+      if (ctx.text.startsWith('>')) { text += '\n' }
+      text += ctx.text
     }
     if (ctx.attachments.length) {
-      text += '\n' + this.greentext(Array.from(ctx.attachments, this.attachmentToUrl).join('\n'))
+      for (const msg of ctx.attachments) {
+        text += '\n' + this.greentext(this.attachmentToUrl(msg))
+      }
     }
     if (ctx.hasReplyMessage) {
       text += '\n' + this.greentext(await this.toMessage(ctx.replyMessage))
