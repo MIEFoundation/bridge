@@ -17,7 +17,7 @@ module.exports = {
       // Config of platform (varies)
       config: {
         groupId: 123456789, // Optional
-        // userAgent: "Custom user agent"
+        // userAgent: 'Custom user agent'
         token: 'SampleUserTokenToVKSampleUserTokenToVKSampleUserTokenToVKSampleUserTokenToVK'
       }
     },
@@ -53,7 +53,7 @@ module.exports = {
     cacheOnly: false,
     // Otherwise, write message IDs to file
     // Message contents are NOT stored
-    // Default = ".storage"
+    // Default = '.storage'
     path: '.storage',
     // Cleanup old messages from storage and write
     // everything else to disk every N seconds
