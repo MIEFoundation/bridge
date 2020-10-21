@@ -10,6 +10,7 @@ module.exports = class Storage {
     this.cache = new Map()
     this.saveInterval = saveInterval * 1000
     this.timestamps = new Map()
+    this._int = 0
   }
 
   async get (id) {
@@ -59,6 +60,13 @@ module.exports = class Storage {
     await writeFile(this.path, msgpack.encode({ msg, ts }))
   }
 
+  async interval () {
+    console.log(`* Cleaned up ${await this.cleanup()} messages`)
+    if (!this.cacheOnly) {
+      await this.writeFile()
+    }
+  }
+
   async start () {
     if (this.cacheOnly) return
     if (existsSync(this.path)) { await this.readFile() }
@@ -66,11 +74,11 @@ module.exports = class Storage {
     // Deprecation
     if (existsSync(this.pathBackup)) { await unlink(this.pathBackup) }
 
-    setInterval(async () => {
-      console.log(`* Cleaned up ${await this.cleanup()} messages`)
-      if (!this.cacheOnly) {
-        await this.writeFile()
-      }
-    }, this.saveInterval)
+    this._int = setInterval(this.interval.bind(this), this.saveInterval)
+  }
+
+  async stop () {
+    await this.interval()
+    clearInterval(this._int)
   }
 }
