@@ -79,14 +79,14 @@ module.exports = class Discord extends BasePlatform {
   }
 
   mentionsToText (mentions, text) {
-    if (mentions.crosspostedChannels.size) {
-      text = text.replace(MessageMentions.CHANNELS_PATTERN, (_, id) => `#${mentions.crosspostedChannels.get(id).name}`)
+    if (mentions.channels.size) {
+      text = text.replace(MessageMentions.CHANNELS_PATTERN, (_, id) => `#${mentions.channels.get(id).name}`)
     }
     if (mentions.roles.size) {
       text = text.replace(MessageMentions.ROLES_PATTERN, (_, id) => `@${mentions.roles.get(id).name}`)
     }
     if (mentions.members.size) {
-      text = text.replace(MessageMentions.USERS_PATTERN, (_, id) => `@${mentions.members.get(id).name}`)
+      text = text.replace(MessageMentions.USERS_PATTERN, (_, id) => `@${mentions.members.get(id).displayName}`)
     }
     if (EMOJI_PATTERN.test(text)) {
       text = text.replace(EMOJI_PATTERN, '$1')

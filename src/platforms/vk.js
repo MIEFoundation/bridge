@@ -9,7 +9,7 @@ module.exports = class VK extends BasePlatform {
   get tagName () { return 'vk' }
   get idName () { return 'VK' }
 
-  constructor ({ token, userId, groupId, userAgent = 'MIEFoudation/Bridge (+https://github.com/MIEFoundation/Bridge)' }) {
+  constructor ({ token, groupId, userAgent = 'MIEFoudation/Bridge (+https://github.com/MIEFoundation/Bridge)' }) {
     super()
     this.client = new Client({
       token,
