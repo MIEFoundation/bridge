@@ -1,13 +1,3 @@
-class MessageID extends Array {
-  constructor (prefix, ...args) {
-    super(...args)
-    this.prefix = prefix
-  }
-
-  static fromString (str) { return new MessageID(...str.split('-')) }
-  toString () { return this.prefix + '-' + this.valueOf().join('-') }
-}
-
 class BasePlatform {
   get tagName () { return '' }
   get idName () { return 'ID' }
@@ -17,7 +7,7 @@ class BasePlatform {
   onRemove (fn) { return this.on('remove', fn) }
 
   createId (...args) {
-    return new MessageID(this.idName, ...args)
+    return [this.idName, ...args]
   }
 
   tag (id, name = '') {
@@ -25,7 +15,7 @@ class BasePlatform {
   }
 
   greentext (text) {
-    return text.split('\n').map(v => '> ' + v).join('\n')
+    return text.split('\n').map(v => `> ${v}`).join('\n')
   }
 
   async start () {
@@ -52,7 +42,6 @@ function mapChatsToDictionary ({ platforms, chats }) {
 }
 
 module.exports = {
-  MessageID,
   BasePlatform,
   mapChatsToDictionary
 }

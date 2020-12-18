@@ -1,6 +1,5 @@
 const { promises: { readFile, writeFile, unlink }, existsSync } = require('fs')
 const msgpack = require('msgpack-lite')
-const { MessageID } = require('./utils')
 
 module.exports = class Storage {
   constructor ({ cacheOnly = false, path = '.storage', saveInterval = 60 * 10 }) {
@@ -53,7 +52,7 @@ module.exports = class Storage {
       await readFile(existsSync(this.path) ? this.path : this.pathBackup)
     )
     for (const key in msg) {
-      this.cache.set(key, msg[key].map(MessageID.fromString))
+      this.cache.set(key, msg[key].map(v => v.split(/,-/)))
       this.timestamps.set(key, ts[key])
     }
   }
