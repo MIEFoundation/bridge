@@ -12,17 +12,25 @@ module.exports = class Storage {
     this.timestamps = new Map()
     this._int = 0
   }
+  
+  proxy () {
+    return new Proxy(this.cache, {
+      get: (target, prop) => this.get(prop),
+      set: (target, prop, value) => this.set(prop, value),
+      deleteProperty: (target, prop) => this.delete(prop)
+    })
+  }
 
-  async get (id) {
+  get (id) {
     return this.cache.get(id.toString())
   }
 
-  async set (id, value) {
+  set (id, value) {
     this.cache.set(id.toString(), value)
     return this
   }
 
-  async delete (id) {
+  delete (id) {
     this.cache.delete(id.toString())
     return this
   }
