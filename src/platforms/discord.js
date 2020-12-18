@@ -12,7 +12,6 @@ module.exports = class Discord extends BasePlatform {
   constructor ({ clientId, guildId, token, activity = {} }) {
     super()
     this.client = new Client({
-      fetchAllMembers: true,
       presence: {
         status: 'online',
         activity: {
@@ -24,19 +23,20 @@ module.exports = class Discord extends BasePlatform {
       //   intents: ["GUILD_MESSAGES", "GUILD_MESSAGE_TYPING", "GUILD_MESSAGE_REACTIONS"]
       // }
     })
-    this.login = () => this.client.login(token)
-    this.guildId = guildId
-    this.selfID = clientId
+    this.login = this.client.login.bind(this.client, token)
+    this.selfID = ''
   }
 
   async start () {
     await this.login()
+    this.selfID = this.client.user.id
     await once(this.client, 'ready')
   }
 
   async stop () {
     this.login = null
-    this.client = this.client.destroy()
+    this.client.destroy()
+    this.client = null
   }
 
   on (name, func) {
@@ -47,7 +47,7 @@ module.exports = class Discord extends BasePlatform {
     })[name], async (msg, msgNew) => {
       if (!msg.guild || msg.author.id === this.selfID) return
       const bridgeId = this.createId(msg.channel.id, msg.id)
-      const bridgeMessage = this.toMessage(msgNew || msg)
+      const bridgeMessage = await this.toMessage(msgNew || msg)
       func(bridgeId, bridgeMessage)
     })
     return this
@@ -55,27 +55,22 @@ module.exports = class Discord extends BasePlatform {
 
   async send (chatId, message) {
     const channel = await this.client.channels.fetch(chatId)
-    channel.startTyping()
-    message = message.replace(TO_ANY_PATTERN, '<$&>')
-    const msg = await channel.send(message)
-    channel.stopTyping()
+    const msg = await channel.send(message.replace(TO_ANY_PATTERN, '<$&>'))
     return this.createId(chatId, msg.id)
   }
 
   async edit ([chatId, messageId], message) {
     const channel = await this.client.channels.fetch(chatId)
     const msg = await channel.messages.fetch(messageId)
-    if (!msg.editable) return false
-    await msg.edit(message)
-    return true
+    if (!msg.editable) throw new Error('Unable to edit')
+    await msg.edit(message.replace(TO_ANY_PATTERN, '<$&>'))
   }
 
   async remove ([chatId, messageId]) {
     const channel = await this.client.channels.fetch(chatId)
     const msg = await channel.messages.fetch(messageId)
-    if (!msg.deletable) return false
+    if (!msg.deletable) throw new Error('Unable to delete')
     await msg.delete()
-    return true
   }
 
   mentionsToText (mentions, text) {
@@ -94,11 +89,20 @@ module.exports = class Discord extends BasePlatform {
     return text
   }
 
-  toMessage (msg) {
-    if (msg.deleted) return
-    if (msg.author.id === this.selfId) return this.greentext(msg)
+  async toMessage (msg) {
+    if (msg.deleted) return ''
     let text = this.tag(msg.author.tag.replace('#', ' #'))
-    text += (msg.content.startsWith('>') ? '\n' : '') + msg.content
+    if (msg.content.startsWith('>')) { text += '\n' }
+    text += msg.content
+    if (msg.reference) {
+      const { channelID, messageID } = msg.reference
+      try {
+        const channel = await this.client.channels.fetch(channelID)
+        const reference = await channel.messages.fetch(messageID)
+        text += '\n' + this.greentext(await toMessage(reference))
+      } catch {}
+    }
+    
     if (msg.attachments.size) {
       text += '\n' + this.greentext(Array.from(msg.attachments.values(), v => v.url).join('\n'))
     }
