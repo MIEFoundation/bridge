@@ -11,6 +11,7 @@ module.exports = class App {
   constructor (settings) {
     this.toName = mapChatsToDictionary(settings)
     this.storage = new Storage(settings.storage)
+    this.messages = this.storage.proxy()
     this.failsafe = settings.failsafe
     this.logging = settings.logging
 
@@ -52,33 +53,46 @@ module.exports = class App {
           if (!this.failsafe) process.exit(1)
         }
       }
-      await this.addMessages(id, ids)
+      this.messages[id] = ids
     })
-      .onEdit(async (id, msg) => {
-        const ids = await this.fetchMessages(id)
+      .onEdit(async (_id, msg) => {
+        const ids = await this.messages[_id]
+        if (!ids || !ids.length) {
+          console.warn(`IDs ${_id} not found in database`)
+          if (!this.failsafe) process.exit(1)
+        }
+        for (const id of ids) {
+          if (!id|| !id.length) {
+            console.warn(`ID ${id} not found in database`)
+            if (!this.failsafe) process.exit(1)
+          }
+          const chat = toName[id[0]]
+          if (!chat) return
+          let i = 0
+          for (const chatId in chat) {
+            if (!this.instances[chatId]) continue
+            try {
+              await this.instances[chatId].edit(ids[i++], msg)
+            } catch (e) {
+              console.warn(`* Caught error on platform ${chatId} on message edit:\n`, e)
+              if (!this.failsafe) process.exit(1)
+            }
+          }
+        }
+      })
+      .onRemove(async (id, msg) => {
+        const ids = this.messages[id]
+        if (!ids || !ids.length) {
+          console.warn(`ID ${id} not found in database`)
+          if (!this.failsafe) process.exit(1)
+        }
         const chat = toName[id[0]]
         if (!chat) return
         let i = 0
         for (const chatId in chat) {
           if (!this.instances[chatId]) continue
           try {
-            await this.instances[chatId].edit(ids[i], msg)
-          } catch (e) {
-            console.warn(`* Caught error on platform ${chatId} on message edit:\n`, e)
-            if (!this.failsafe) process.exit(1)
-          }
-          i++
-        }
-      })
-      .onRemove(async (id, msg) => {
-        const ids = await this.fetchMessages(id)
-        const chat = toName[id[0]]
-        if (!chat) return
-        const i = 0
-        for (const chatId in chat) {
-          if (!this.instances[chatId]) continue
-          try {
-            await this.instances[chatId].remove(ids[i])
+            await this.instances[chatId].remove(ids[i++])
           } catch (e) {
             console.warn(`* Caught error on platform ${chatId} on message remove:\n`, e)
             if (!this.failsafe) process.exit(1)
