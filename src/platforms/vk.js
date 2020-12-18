@@ -23,22 +23,7 @@ module.exports = class VK extends BasePlatform {
     this.groupId = groupId | 0
     this.userId = 0
     this.userCache = new Map()
-    this.client.updates.on(['new_message', 'edit_message', 'messages_delete'], async (ctx, next) => {
-      await ctx.loadMessagePayload()
-      if ((this.groupId ? ctx.payload.admin_author_id : ctx.senderId) === this.userId) return
-      let id = ctx.id
-      if (!id) {
-        const { items: [msg] } = await this.api.messages.getByConversationMessageId({
-          peer_id: ctx.peerId,
-          ...(this.groupId ? { group_id: this.groupId } : {}),
-          conversation_message_ids: ctx.conversationMessageId
-        })
-        id = msg.id
-      }
-      ctx.bridgeId = this.createId(ctx.peerId, id)
-      ctx.bridgeMessage = await this.toMessage(ctx)
-      next()
-    })
+    this.client.updates.on(['message_new', 'message_edit', 'message_reply'], this._transformContext.bind(this))
   }
 
   async start () {
@@ -51,11 +36,39 @@ module.exports = class VK extends BasePlatform {
     this.client = await this.client.updates.stop()
     this.api = null
   }
+  
+  async _transformContext (ctx, next) {
+    await ctx.loadMessagePayload()
+    if ((this.groupId ? ctx.payload.admin_author_id : ctx.senderId) === this.userId) return
+    let id = ctx.id
+    if (!id) {
+      const { items: [msg] } = await this.api.messages.getByConversationMessageId({
+        peer_id: ctx.peerId,
+        ...(this.groupId ? { group_id: this.groupId } : {}),
+        conversation_message_ids: ctx.conversationMessageId
+      })
+      id = msg.id
+    }
+    ctx.bridgeId = this.createId(ctx.peerId, id)
+    ctx.bridgeMessage = await this.toMessage(ctx)
+    next()
+  }
+
+  onRemove (func) {
+    this.client.updates.on('message_flags_add', async (ctx, next) => {
+      if (!ctx.isDeletedForAll) return
+      const msg = ctx.message
+      await this._transformContext(msg, () => {})
+      func(msg.bridgeId)
+      next()
+    })
+    return this
+  }
 
   on (name, func) {
     this.client.updates.on(({
-      send: 'new_message',
-      edit: 'edit_message',
+      send: ['message_new', 'message_reply'],
+      edit: 'message_edit',
       remove: 'messages_delete'
     })[name], async (ctx, next) => {
       func(ctx.bridgeId, ctx.bridgeMessage)
@@ -112,7 +125,7 @@ module.exports = class VK extends BasePlatform {
   attachmentToUrl (v) {
     switch (v.type) {
       case 'photo': return v.sizes.sort((a, b) => b.width - a.width)[0].url
-      case 'audio_message': return `[Аудиосообщение] ${v.url}`
+      case 'message_audio': return `[Аудиосообщение] ${v.url}`
       case 'audio':
       case 'link':
         return `${v.isHq ? '[HD] ' : ''}[${v.artist} - ${v.title}] ${v.url}`

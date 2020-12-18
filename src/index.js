@@ -40,65 +40,53 @@ module.exports = class App {
         .onEdit((id, msg) => console.log(MSG_EDT + MSG_HEAD, id, msg))
         .onRemove((id, msg) => console.log(MSG_REM + MSG_HEAD, id, msg))
     }
-    inst.onSend(async (id, msg) => {
-      const ids = []
-      const chat = toName[id[0]]
-      if (!chat) return
-      for (const chatId in chat) {
-        if (!this.instances[chatId]) continue
-        try {
-          ids.push(await this.instances[chatId].send(chat[chatId], msg))
-        } catch (e) {
-          console.warn(`* Caught error on platform ${chatId} on message sending:\n`, e)
-          if (!this.failsafe) process.exit(1)
-        }
-      }
-      this.messages[id] = ids
-    })
-      .onEdit(async (_id, msg) => {
-        const ids = await this.messages[_id]
-        if (!ids || !ids.length) {
-          console.warn(`IDs ${_id} not found in database`)
-          if (!this.failsafe) process.exit(1)
-        }
-        for (const id of ids) {
-          if (!id|| !id.length) {
-            console.warn(`ID ${id} not found in database`)
+    inst
+      .onSend(async (id, msg) => {
+        const ids = []
+        const chat = toName[id[0]]
+        if (!chat) return
+        for (const chatId in chat) {
+          if (!this.instances[chatId]) continue
+          try {
+            ids.push(await this.instances[chatId].send(chat[chatId], msg))
+          } catch (e) {
+            console.warn(`* Caught error on platform ${chatId} on message sending:\n`, e)
             if (!this.failsafe) process.exit(1)
           }
-          const chat = toName[id[0]]
-          if (!chat) return
-          let i = 0
-          for (const chatId in chat) {
-            if (!this.instances[chatId]) continue
-            try {
-              await this.instances[chatId].edit(ids[i++], msg)
-            } catch (e) {
-              console.warn(`* Caught error on platform ${chatId} on message edit:\n`, e)
-              if (!this.failsafe) process.exit(1)
-            }
+        }
+        this.messages[id] = ids
+      })
+      .onEdit(async (id, msg) => {
+        const ids = this.messages[id]
+        if (!ids) return
+        for (const chat of ids) {
+          const [chatId] = chat
+          const chatName = toName[chatId]
+          console.log(chatName, this.instances[chatName])
+          if (!this.instances[chatName]) continue
+          try {
+            await this.instances[chatName].edit(chat, msg)
+          } catch (e) {
+            console.warn(`* Caught error on platform ${chatName} on message edit:\n`, e)
+            if (!this.failsafe) process.exit(1)
           }
         }
       })
       .onRemove(async (id, msg) => {
         const ids = this.messages[id]
-        if (!ids || !ids.length) {
-          console.warn(`ID ${id} not found in database`)
-          if (!this.failsafe) process.exit(1)
-        }
-        const chat = toName[id[0]]
-        if (!chat) return
-        let i = 0
-        for (const chatId in chat) {
-          if (!this.instances[chatId]) continue
+        if (!ids) return
+        for (const chat of ids) {
+          const [chatId] = chat;
+          const chatName = toName[chatId]
+          if (!this.instances[chatName]) continue
           try {
-            await this.instances[chatId].remove(ids[i++])
+            await this.instances[chatName].remove(chat)
           } catch (e) {
-            console.warn(`* Caught error on platform ${chatId} on message remove:\n`, e)
+            console.warn(`* Caught error on platform ${chatName} on message remove:\n`, e)
             if (!this.failsafe) process.exit(1)
           }
         }
-        await this.removeMessages(id)
+        delete this.messages[id]
       })
     this.instances[platformName] = inst
   }
@@ -115,7 +103,7 @@ module.exports = class App {
         await inst.start()
         console.log(`* ${name} [${inst.constructor.name}] ready`)
       } catch (e) {
-        console.warn(`* ${name} [${inst.constructor.name}] failed`)
+        console.warn(`* ${name} [${inst.constructor.name}] failed`, e)
         if (!this.failsafe) process.exit(1)
       }
     }))
