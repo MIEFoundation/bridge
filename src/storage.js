@@ -69,7 +69,8 @@ module.exports = class Storage {
   }
 
   async interval () {
-    console.log(`* Cleaned up ${await this.cleanup()} messages`)
+    const cleaned = await this.cleanup()
+    if (cleaned) console.log(`* Cleaned up ${cleaned} messages`)
     if (!this.cacheOnly) {
       await this.writeFile()
     }
