@@ -18,23 +18,20 @@ module.exports = class Discord extends BasePlatform {
           ...activity,
           application: clientId
         }
-      }
-      // ws: {
-      //   intents: ["GUILD_MESSAGES", "GUILD_MESSAGE_TYPING", "GUILD_MESSAGE_REACTIONS"]
-      // }
+      },
+      intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_TYPING"]
     })
-    this.login = this.client.login.bind(this.client, token)
+    this.token = token
     this.selfID = ''
   }
 
   async start () {
-    await this.login()
+    await this.client.login(this.token)
     this.selfID = this.client.user.id
     await once(this.client, 'ready')
   }
 
   async stop () {
-    this.login = null
     this.client.destroy()
     this.client = null
   }
