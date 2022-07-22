@@ -24,6 +24,6 @@
     "vk-io": "4.6.0"
   },
   "devDependencies": {
-    "standard": "16.0.4"
+    "standard": "17.0.0"
   }
 }
