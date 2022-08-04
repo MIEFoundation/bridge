@@ -19,7 +19,7 @@ module.exports = class Discord extends BasePlatform {
           application: clientId
         }
       },
-      intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_TYPING"]
+      intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_TYPING']
     })
     this.token = token
     this.selfID = ''
@@ -96,10 +96,10 @@ module.exports = class Discord extends BasePlatform {
       try {
         const channel = await this.client.channels.fetch(channelID)
         const reference = await channel.messages.fetch(messageID)
-        text += '\n' + this.greentext(await toMessage(reference))
+        text += '\n' + this.greentext(await this.toMessage(reference))
       } catch {}
     }
-    
+
     if (msg.attachments.size) {
       text += '\n' + this.greentext(Array.from(msg.attachments.values(), v => v.url).join('\n'))
     }

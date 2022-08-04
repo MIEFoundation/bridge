@@ -12,7 +12,7 @@ module.exports = class Storage {
     this.timestamps = new Map()
     this._int = 0
   }
-  
+
   proxy () {
     return new Proxy(this.cache, {
       get: (target, prop) => this.get(prop),

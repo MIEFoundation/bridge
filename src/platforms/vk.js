@@ -36,7 +36,7 @@ module.exports = class VK extends BasePlatform {
     this.client = await this.client.updates.stop()
     this.api = null
   }
-  
+
   async _transformContext (ctx, next) {
     await ctx.loadMessagePayload()
     if ((this.groupId ? ctx.payload.admin_author_id : ctx.senderId) === this.userId) return

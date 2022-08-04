@@ -76,7 +76,7 @@ module.exports = class App {
         const ids = this.messages[id]
         if (!ids) return
         for (const chat of ids) {
-          const [chatId] = chat;
+          const [chatId] = chat
           const chatName = toName[chatId]
           if (!this.instances[chatName]) continue
           try {

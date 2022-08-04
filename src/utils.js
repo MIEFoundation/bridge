@@ -11,9 +11,9 @@ class MessageID extends Array {
 class BasePlatform {
   get tagName () { return '' }
   get idName () { return 'ID' }
-  
+
   on () {
-      // It's NOT recommended to call this method directly
+    // It's NOT recommended to call this method directly
   }
 
   onSend (fn) { return this.on('send', fn) }
