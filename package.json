@@ -21,7 +21,7 @@
   "dependencies": {
     "discord.js": "14.3.0",
     "msgpack-lite": "0.1.26",
-    "vk-io": "4.6.0"
+    "vk-io": "4.7.0"
   },
   "devDependencies": {
     "standard": "17.0.0"
