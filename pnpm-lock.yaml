@@ -4,12 +4,12 @@ specifiers:
   discord.js: 14.3.0
   msgpack-lite: 0.1.26
   standard: 17.0.0
-  vk-io: 4.6.0
+  vk-io: 4.7.0
 
 dependencies:
   discord.js: 14.3.0
   msgpack-lite: 0.1.26
-  vk-io: 4.6.0
+  vk-io: 4.7.0
 
 devDependencies:
   standard: 17.0.0
@@ -813,12 +813,12 @@ packages:
     resolution: {integrity: sha512-qfqtYan3rxrnCk1VYaA4H+Ms9xdpPqvLZa6xmMgFvhO32x7/3J/ExcTd6qpxM0vH2GdMI+poehyBZvqfMTto8A==}
     dev: false
 
-  /formdata-node/4.3.3:
-    resolution: {integrity: sha512-coTew7WODO2vF+XhpUdmYz4UBvlsiTMSNaFYZlrXIqYbFd4W7bMwnoALNLE6uvNgzTg2j1JDF0ZImEfF06VPAA==}
+  /formdata-node/4.4.1:
+    resolution: {integrity: sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==}
     engines: {node: '>= 12.20'}
     dependencies:
       node-domexception: 1.0.0
-      web-streams-polyfill: 4.0.0-beta.1
+      web-streams-polyfill: 4.0.0-beta.3
     dev: false
 
   /formdata-polyfill/4.0.10:
@@ -1813,14 +1813,14 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vk-io/4.6.0:
-    resolution: {integrity: sha512-doP3RgFGbqH4NAWnXPSZxEa6IDjWZk16TEuV3UO70TSXqYDkQnWmwRmyOq/zgrtwtM1nKZ2/0HulYGcKY2/j/g==}
+  /vk-io/4.7.0:
+    resolution: {integrity: sha512-Ohn+qVNnShV2lejeuyK4AWDXEPtEAXDkUlVDnxjTPSjEHfyxfgKgpCNoi/8BWV3CtaI0koGm2YY8NaZKkPyWpw==}
     engines: {node: '>=12.20.0'}
     dependencies:
       abort-controller: 3.0.0
       debug: 4.3.4
       form-data-encoder: 1.7.2
-      formdata-node: 4.3.3
+      formdata-node: 4.4.1
       inspectable: 1.2.1
       middleware-io: 2.8.0
       node-fetch: 3.2.10
@@ -1834,9 +1834,9 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /web-streams-polyfill/4.0.0-beta.1:
-    resolution: {integrity: sha512-3ux37gEX670UUphBF9AMCq8XM6iQ8Ac6A+DSRRjDoRBm1ufCkaCDdNVbaqq60PsEkdNlLKrGtv/YBP4EJXqNtQ==}
-    engines: {node: '>= 12'}
+  /web-streams-polyfill/4.0.0-beta.3:
+    resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
+    engines: {node: '>= 14'}
     dev: false
 
   /which-boxed-primitive/1.0.2:
