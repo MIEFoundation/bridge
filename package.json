@@ -19,7 +19,7 @@
   "author": "MIEFoundation",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "14.7.1",
+    "discord.js": "14.8.0",
     "msgpack-lite": "0.1.26",
     "vk-io": "4.8.1"
   },
