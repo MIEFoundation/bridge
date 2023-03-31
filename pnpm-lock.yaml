@@ -4,12 +4,12 @@ specifiers:
   discord.js: 14.8.0
   msgpack-lite: 0.1.26
   standard: 17.0.0
-  vk-io: 4.8.1
+  vk-io: 4.8.2
 
 dependencies:
   discord.js: 14.8.0
   msgpack-lite: 0.1.26
-  vk-io: 4.8.1
+  vk-io: 4.8.2
 
 devDependencies:
   standard: 17.0.0
@@ -1017,8 +1017,8 @@ packages:
   /inherits/2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
-  /inspectable/1.2.2:
-    resolution: {integrity: sha512-6wGbJJe0Y8oTLSoLXIZht1OVLLh9DNitpX+IoneyUWczkHQNWcVYuFVu7beGQoCemBELdJXpaffswBeQ9RTSVA==}
+  /inspectable/2.0.0:
+    resolution: {integrity: sha512-fm7l+r/3fuXdYE/DyB5j/9ibczakZxwygTkqz24e0ecdKLSM4Celm7CAIctGKm8TED0mCa+uXUfPiFROfb7kJA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       reflect-metadata: ^0.1.13
@@ -1311,8 +1311,8 @@ packages:
     engines: {node: '>=10.5.0'}
     dev: false
 
-  /node-fetch/3.2.10:
-    resolution: {integrity: sha512-MhuzNwdURnZ1Cp4XTazr69K0BTizsBroX7Zx3UgDSVcZYKF/6p0CBe4EUb/hLqmzVhl0UpYfgRljQ4yxE+iCxA==}
+  /node-fetch/3.3.1:
+    resolution: {integrity: sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.0
@@ -1844,17 +1844,17 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vk-io/4.8.1:
-    resolution: {integrity: sha512-ThaHZNjn+ocNgipMz76w3IAMxoV4i70R/mNfsWVDQw0QlBdl9xDtB/O0ZBx9tdTYZqdBllQ5JBaALqTyQkgQWA==}
+  /vk-io/4.8.2:
+    resolution: {integrity: sha512-excbc4zEcuh1iw9MfzKLiHApS4TyjhuL8X4ugkDd9anCaI69NgQ9xfTGhyuNlQOI+zE9asfO+r/vPMp7RUYSGA==}
     engines: {node: '>=12.20.0'}
     dependencies:
       abort-controller: 3.0.0
       debug: 4.3.4
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
-      inspectable: 1.2.2
+      inspectable: 2.0.0
       middleware-io: 2.8.1
-      node-fetch: 3.2.10
+      node-fetch: 3.3.1
     transitivePeerDependencies:
       - reflect-metadata
       - supports-color
