@@ -1,13 +1,13 @@
 lockfileVersion: 5.3
 
 specifiers:
-  discord.js: 14.10.1
+  discord.js: 14.10.2
   msgpack-lite: 0.1.26
   standard: 17.0.0
   vk-io: 4.8.3
 
 dependencies:
-  discord.js: 14.10.1
+  discord.js: 14.10.2
   msgpack-lite: 0.1.26
   vk-io: 4.8.3
 
@@ -394,8 +394,8 @@ packages:
     resolution: {integrity: sha512-FaPGBK9hx3zqSRX1x3KQWj+OElAJKmcyyfcdCy+U4AKv+gYuIkRySM7zd1So2sE4gc1DikkghkSBgBgKh6pe4Q==}
     dev: false
 
-  /discord.js/14.10.1:
-    resolution: {integrity: sha512-oSGElJRfFTBJVaU15R9c4g6YLZVJoVZGNXWl9O1J1Kz8CPN7vJ70OONYMNZWjelDdy3KCaF0SpF+zZiHEvTysQ==}
+  /discord.js/14.10.2:
+    resolution: {integrity: sha512-yPMJ/vGSWJP8WbbfPX18WGU2wOLBjL+OKVOVKI1eWx3ICcUhDg5MvFkg5aNGiokjPfKlAgqnFIUH0jl59ONHrQ==}
     engines: {node: '>=16.9.0'}
     dependencies:
       '@discordjs/builders': 1.6.3
