@@ -15,8 +15,8 @@ dependencies:
     specifier: ^5.7.12
     version: 5.9.8(@mikro-orm/core@5.9.8)
   bullmq:
-    specifier: ^4.1.0
-    version: 4.17.0
+    specifier: ^5.0.0
+    version: 5.7.14
   discord.js:
     specifier: 14.15.3
     version: 14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
@@ -642,13 +642,11 @@ packages:
       semver: 7.3.7
     dev: true
 
-  /bullmq@4.17.0:
-    resolution: {integrity: sha512-URnHgB01rlCP8RTpmW3kFnvv3vdd2aI1OcBMYQwnqODxGiJUlz9MibDVXE83mq7ee1eS1IvD9lMQqGszX6E5Pw==}
+  /bullmq@5.7.14:
+    resolution: {integrity: sha512-ESAQlJGU1W+qp5xTgx5XR+4svqCqGGZNlwkn83K0A0c2FL0x+d9mpX9KmENyb9pt5G6fplFWq8RFebajUYRH4g==}
     dependencies:
       cron-parser: 4.9.0
-      glob: 8.1.0
       ioredis: 5.4.1
-      lodash: 4.17.21
       msgpackr: 1.10.2
       node-abort-controller: 3.1.1
       semver: 7.6.2
@@ -1502,18 +1500,6 @@ packages:
       once: 1.4.0
       path-is-absolute: 1.0.1
 
-  /glob@8.1.0:
-    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
-    engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.6
-      once: 1.4.0
-    dev: false
-
   /globals@13.17.0:
     resolution: {integrity: sha512-1C+6nQRb1GwGMKm2dH/E7enFAMxGTmGI7/dEdhy/DNelv85w9B72t3uc5frtMNXIbzrarJJ/lTCjcaZwbLJmyw==}
     engines: {node: '>=8'}
@@ -2102,13 +2088,6 @@ packages:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
       brace-expansion: 1.1.11
-
-  /minimatch@5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: false
 
   /minimatch@7.4.6:
     resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
