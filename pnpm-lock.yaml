@@ -39,7 +39,7 @@ devDependencies:
     version: 17.0.0
   typescript:
     specifier: ^5.0.4
-    version: 5.5.2
+    version: 5.5.3
   utf-8-validate:
     specifier: ^6.0.3
     version: 6.0.4
@@ -3032,8 +3032,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /typescript@5.5.2:
-    resolution: {integrity: sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==}
+  /typescript@5.5.3:
+    resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
