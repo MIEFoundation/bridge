@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "bufferutil": "^4.0.7",
-    "standard": "17.0.0",
+    "standard": "17.1.1",
     "typescript": "^5.0.4",
     "utf-8-validate": "^6.0.3",
     "zlib-sync": "^0.1.8"
