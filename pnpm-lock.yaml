@@ -16,7 +16,7 @@ dependencies:
     version: 5.9.8(@mikro-orm/core@5.9.8)
   bullmq:
     specifier: ^4.1.0
-    version: 4.18.0
+    version: 4.18.1
   discord.js:
     specifier: 14.16.3
     version: 14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
@@ -733,8 +733,8 @@ packages:
       semver: 7.6.3
     dev: true
 
-  /bullmq@4.18.0:
-    resolution: {integrity: sha512-TJiS8YaO3GpaiSum3EufaXHnZc7Q5+BjJP1+kM8pD/DAB7BzI44RHZh9yEHgFHI0ikwmHzULIA9zUqkF3L53Ag==}
+  /bullmq@4.18.1:
+    resolution: {integrity: sha512-36oje+RHByJ5KRIFX3sxIu9b2IX2cK7QmI27bIJHsjqqTaVmaqHX85EuARAUBVyQyqER7SnqIXv6t612NoYwSg==}
     dependencies:
       cron-parser: 4.9.0
       glob: 8.1.0
@@ -743,7 +743,7 @@ packages:
       msgpackr: 1.11.0
       node-abort-controller: 3.1.1
       semver: 7.6.3
-      tslib: 2.7.0
+      tslib: 2.8.0
       uuid: 9.0.1
     transitivePeerDependencies:
       - supports-color
@@ -3350,6 +3350,10 @@ packages:
 
   /tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
+    dev: false
+
+  /tslib@2.8.0:
+    resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
     dev: false
 
   /type-check@0.4.0:
