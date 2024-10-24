@@ -16,7 +16,7 @@ dependencies:
     version: 5.9.8(@mikro-orm/core@5.9.8)
   bullmq:
     specifier: ^4.1.0
-    version: 4.18.1
+    version: 4.18.2
   discord.js:
     specifier: 14.16.3
     version: 14.16.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
@@ -733,8 +733,8 @@ packages:
       semver: 7.6.3
     dev: true
 
-  /bullmq@4.18.1:
-    resolution: {integrity: sha512-36oje+RHByJ5KRIFX3sxIu9b2IX2cK7QmI27bIJHsjqqTaVmaqHX85EuARAUBVyQyqER7SnqIXv6t612NoYwSg==}
+  /bullmq@4.18.2:
+    resolution: {integrity: sha512-Cx0O98IlGiFw7UBa+zwGz+nH0Pcl1wfTvMVBlsMna3s0219hXroVovh1xPRgomyUcbyciHiugGCkW0RRNZDHYQ==}
     dependencies:
       cron-parser: 4.9.0
       glob: 8.1.0
