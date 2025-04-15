@@ -27,8 +27,8 @@ dependencies:
     specifier: 0.1.26
     version: 0.1.26
   vk-io:
-    specifier: 4.8.3
-    version: 4.8.3
+    specifier: 4.9.1
+    version: 4.9.1
 
 devDependencies:
   bufferutil:
@@ -1889,8 +1889,8 @@ packages:
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
-  /inspectable@2.0.0:
-    resolution: {integrity: sha512-fm7l+r/3fuXdYE/DyB5j/9ibczakZxwygTkqz24e0ecdKLSM4Celm7CAIctGKm8TED0mCa+uXUfPiFROfb7kJA==}
+  /inspectable@2.1.1:
+    resolution: {integrity: sha512-emgKBW9bb33IjcVozbsLsgmx/PD8pEemmAEDi+5ruSOuKJ9x/KneVJaOr/7Z93jXlpfNaW2qoqfhKB2qtqcGow==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       reflect-metadata: ^0.1.13
@@ -2564,8 +2564,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-fetch@3.3.1:
-    resolution: {integrity: sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==}
+  /node-fetch@3.3.2:
+    resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.0
@@ -3479,17 +3479,17 @@ packages:
     engines: {node: '>=0.10.48'}
     dev: true
 
-  /vk-io@4.8.3:
-    resolution: {integrity: sha512-SVPzvASjrb2iLwacmRpir+CwC6cfQKGXMTlVJt1sL46NCgscVvmHJzS9/41JDFvWX+3ycONVwNodv6YCxG4LuQ==}
+  /vk-io@4.9.1:
+    resolution: {integrity: sha512-TyE/PKr2RSYQS4egISSUBZAIPeHwOiSOU7CuzUSigbFZzD3QLOATrYoE6EqIhxWv2na/fO6ZBTB8kYIrU8/PPA==}
     engines: {node: '>=12.20.0'}
     dependencies:
       abort-controller: 3.0.0
-      debug: 4.3.4
+      debug: 4.3.5
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
-      inspectable: 2.0.0
+      inspectable: 2.1.1
       middleware-io: 2.8.1
-      node-fetch: 3.3.1
+      node-fetch: 3.3.2
     transitivePeerDependencies:
       - reflect-metadata
       - supports-color
