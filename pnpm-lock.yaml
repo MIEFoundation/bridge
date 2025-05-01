@@ -45,7 +45,7 @@ devDependencies:
     version: 6.0.5
   zlib-sync:
     specifier: ^0.1.8
-    version: 0.1.9
+    version: 0.1.10
 
 packages:
 
@@ -2525,8 +2525,8 @@ packages:
       msgpackr-extract: 3.0.3
     dev: false
 
-  /nan@2.19.0:
-    resolution: {integrity: sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==}
+  /nan@2.22.2:
+    resolution: {integrity: sha512-DANghxFkS1plDdRsX0X9pm0Z6SJNN6gBdtXfanwoZ8hooC5gosGFSBGRYHUVPz1asKA/kMRqDRdHrluZ61SpBQ==}
     dev: true
 
   /natural-compare@1.4.0:
@@ -3618,9 +3618,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zlib-sync@0.1.9:
-    resolution: {integrity: sha512-DinB43xCjVwIBDpaIvQqHbmDsnYnSt6HJ/yiB2MZQGTqgPcwBSZqLkimXwK8BvdjQ/MaZysb5uEenImncqvCqQ==}
+  /zlib-sync@0.1.10:
+    resolution: {integrity: sha512-t7/pYg5tLBznL1RuhmbAt8rNp5tbhr+TSrJFnMkRtrGIaPJZ6Dc0uR4u3OoQI2d6cGlVI62E3Gy6gwkxyIqr/w==}
     requiresBuild: true
     dependencies:
-      nan: 2.19.0
+      nan: 2.22.2
     dev: true
