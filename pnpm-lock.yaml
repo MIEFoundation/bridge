@@ -18,8 +18,8 @@ dependencies:
     specifier: ^4.1.0
     version: 4.18.2
   discord.js:
-    specifier: 14.20.0
-    version: 14.20.0(bufferutil@4.0.9)(utf-8-validate@6.0.5)
+    specifier: 14.21.0
+    version: 14.21.0(bufferutil@4.0.9)(utf-8-validate@6.0.5)
   ioredis:
     specifier: ^5.3.2
     version: 5.6.1
@@ -983,8 +983,8 @@ packages:
     resolution: {integrity: sha512-vsjsqjAuxsPhiwbPjTBeGQaDPlizFmSkU0mTzFGMgRxqCDIRBR7iTY74HacpzrDV0QtERHRKQEk1tq7drZUtHg==}
     dev: false
 
-  /discord.js@14.20.0(bufferutil@4.0.9)(utf-8-validate@6.0.5):
-    resolution: {integrity: sha512-5fRTptK2vpuz+bTuAEUQLSo/3AgCSLHl6Mm9+/ofb+8cbbnjWllhtaqRBq7XcpzlBnfNEugKv8HvCwcOtIHpCg==}
+  /discord.js@14.21.0(bufferutil@4.0.9)(utf-8-validate@6.0.5):
+    resolution: {integrity: sha512-U5w41cEmcnSfwKYlLv5RJjB8Joa+QJyRwIJz5i/eg+v2Qvv6EYpCRhN9I2Rlf0900LuqSDg8edakUATrDZQncQ==}
     engines: {node: '>=18'}
     dependencies:
       '@discordjs/builders': 1.11.2
