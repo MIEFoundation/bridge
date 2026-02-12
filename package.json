@@ -19,9 +19,9 @@
   "author": "MIEFoundation",
   "license": "MIT",
   "dependencies": {
-    "@mikro-orm/core": "^5.7.12",
-    "@mikro-orm/reflection": "^5.7.12",
-    "@mikro-orm/sqlite": "^5.7.12",
+    "@mikro-orm/core": "^6.0.0",
+    "@mikro-orm/reflection": "^6.0.0",
+    "@mikro-orm/sqlite": "^6.0.0",
     "bullmq": "^4.1.0",
     "discord.js": "14.25.1",
     "ioredis": "^5.3.2",
