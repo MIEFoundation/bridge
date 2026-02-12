@@ -22,7 +22,7 @@ dependencies:
     version: 14.25.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
   ioredis:
     specifier: ^5.3.2
-    version: 5.9.2
+    version: 5.9.3
   msgpack-lite:
     specifier: 0.1.26
     version: 0.1.26
@@ -740,7 +740,7 @@ packages:
     dependencies:
       cron-parser: 4.9.0
       glob: 8.1.0
-      ioredis: 5.9.2
+      ioredis: 5.9.3
       lodash: 4.17.21
       msgpackr: 1.11.5
       node-abort-controller: 3.1.1
@@ -1920,8 +1920,8 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /ioredis@5.9.2:
-    resolution: {integrity: sha512-tAAg/72/VxOUW7RQSX1pIxJVucYKcjFjfvj60L57jrZpYCHC3XN0WCQ3sNYL4Gmvv+7GPvTAjc+KSdeNuE8oWQ==}
+  /ioredis@5.9.3:
+    resolution: {integrity: sha512-VI5tMCdeoxZWU5vjHWsiE/Su76JGhBvWF1MJnV9ZtGltHk9BmD48oDq8Tj8haZ85aceXZMxLNDQZRVo5QKNgXA==}
     engines: {node: '>=12.22.0'}
     dependencies:
       '@ioredis/commands': 1.5.0
