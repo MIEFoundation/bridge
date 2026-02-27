@@ -22,7 +22,7 @@ dependencies:
     version: 14.25.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
   ioredis:
     specifier: ^5.3.2
-    version: 5.9.3
+    version: 5.10.0
   msgpack-lite:
     specifier: 0.1.26
     version: 0.1.26
@@ -184,8 +184,8 @@ packages:
     deprecated: Use @eslint/object-schema instead
     dev: true
 
-  /@ioredis/commands@1.5.0:
-    resolution: {integrity: sha512-eUgLqrMf8nJkZxT24JvVRrQya1vZkQh8BBeYNwGDqa5I0VUi8ACx7uFvAaLxintokpTenkK6DASvo/bvNbBGow==}
+  /@ioredis/commands@1.5.1:
+    resolution: {integrity: sha512-JH8ZL/ywcJyR9MmJ5BNqZllXNZQqQbnVZOqpPQqE1vHiFgAw4NHbvE0FOduNU8IX9babitBT46571OnPTT0Zcw==}
     dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:
@@ -740,7 +740,7 @@ packages:
     dependencies:
       cron-parser: 4.9.0
       glob: 8.1.0
-      ioredis: 5.9.3
+      ioredis: 5.10.0
       lodash: 4.17.21
       msgpackr: 1.11.5
       node-abort-controller: 3.1.1
@@ -1920,11 +1920,11 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /ioredis@5.9.3:
-    resolution: {integrity: sha512-VI5tMCdeoxZWU5vjHWsiE/Su76JGhBvWF1MJnV9ZtGltHk9BmD48oDq8Tj8haZ85aceXZMxLNDQZRVo5QKNgXA==}
+  /ioredis@5.10.0:
+    resolution: {integrity: sha512-HVBe9OFuqs+Z6n64q09PQvP1/R4Bm+30PAyyD4wIEqssh3v9L21QjCVk4kRLucMBcDokJTcLjsGeVRlq/nH6DA==}
     engines: {node: '>=12.22.0'}
     dependencies:
-      '@ioredis/commands': 1.5.0
+      '@ioredis/commands': 1.5.1
       cluster-key-slot: 1.1.2
       debug: 4.4.3
       denque: 2.1.0
