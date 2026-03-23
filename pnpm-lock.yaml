@@ -38,8 +38,8 @@ devDependencies:
     specifier: 17.1.2
     version: 17.1.2
   typescript:
-    specifier: ^5.0.4
-    version: 5.9.3
+    specifier: ^6.0.0
+    version: 6.0.2
   utf-8-validate:
     specifier: ^6.0.3
     version: 6.0.6
@@ -3410,8 +3410,8 @@ packages:
       possible-typed-array-names: 1.0.0
     dev: true
 
-  /typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  /typescript@6.0.2:
+    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
