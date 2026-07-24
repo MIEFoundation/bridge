@@ -15,8 +15,8 @@ dependencies:
     specifier: ^5.7.12
     version: 5.9.8(@mikro-orm/core@5.9.8)
   bullmq:
-    specifier: ^4.1.0
-    version: 4.18.3
+    specifier: ^5.0.0
+    version: 5.81.1
   discord.js:
     specifier: 14.27.0
     version: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
@@ -915,18 +915,21 @@ packages:
       semver: 7.7.2
     dev: true
 
-  /bullmq@4.18.3:
-    resolution: {integrity: sha512-H8t9vhfHEbJDaXp7aalSTe+Do+tR1nvr+lsT+jQxLhy+FFfFj/0p4aYJzADTNLdEqltuxneLVxCGVg92GkQx4w==}
+  /bullmq@5.81.1:
+    resolution: {integrity: sha512-sofyDem/1oPT3BSe4MGJQYhDM5+D+js41VIfhd47db9b/xfY6wZ9Use9RAZBRwqtxQqZ1NhUTae19+kCysWbBg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      redis: '>=5.0.0'
+    peerDependenciesMeta:
+      redis:
+        optional: true
     dependencies:
       cron-parser: 4.9.0
-      glob: 8.1.0
       ioredis: 5.11.1
-      lodash: 4.17.21
-      msgpackr: 1.11.5
+      msgpackr: 2.0.4
       node-abort-controller: 3.1.1
-      semver: 7.7.2
+      semver: 7.8.5
       tslib: 2.8.1
-      uuid: 9.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1778,6 +1781,7 @@ packages:
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
+    requiresBuild: true
 
   /function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
@@ -1888,18 +1892,6 @@ packages:
       minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
-
-  /glob@8.1.0:
-    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
-    engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.6
-      once: 1.4.0
-    dev: false
 
   /globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
@@ -2065,12 +2057,14 @@ packages:
   /inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+    requiresBuild: true
     dependencies:
       once: 1.4.0
       wrappy: 1.0.2
 
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+    requiresBuild: true
 
   /inspectable@2.1.1:
     resolution: {integrity: sha512-emgKBW9bb33IjcVozbsLsgmx/PD8pEemmAEDi+5ruSOuKJ9x/KneVJaOr/7Z93jXlpfNaW2qoqfhKB2qtqcGow==}
@@ -2559,13 +2553,6 @@ packages:
     dependencies:
       brace-expansion: 1.1.12
 
-  /minimatch@5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.2
-    dev: false
-
   /minimatch@7.4.6:
     resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
     engines: {node: '>=10'}
@@ -2691,8 +2678,8 @@ packages:
     dev: false
     optional: true
 
-  /msgpackr@1.11.5:
-    resolution: {integrity: sha512-UjkUHN0yqp9RWKy0Lplhh+wlpdt9oQBYgULZOiFhV3VclSF1JnSQWZ5r9gORQlNYaUKQoR8itv7g7z1xDDuACA==}
+  /msgpackr@2.0.4:
+    resolution: {integrity: sha512-o1C5KRmuRt+apqMr1HuGSqWStZoRBUpEsCsl15uM9VdAF1qHLtvMOU2En747EnTyEl6c4pzPewRMFF31s1CNbA==}
     optionalDependencies:
       msgpackr-extract: 3.0.4
     dev: false
@@ -2876,6 +2863,7 @@ packages:
 
   /once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
+    requiresBuild: true
     dependencies:
       wrappy: 1.0.2
 
@@ -3200,6 +3188,12 @@ packages:
     resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
     engines: {node: '>=10'}
     hasBin: true
+
+  /semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dev: false
 
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
@@ -3658,11 +3652,6 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     requiresBuild: true
-    dev: false
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
     dev: false
 
   /version-guard@1.1.3:
